@@ -19,21 +19,21 @@ import org.jsoup.select.Elements;
  */
 public class AcessoInsta {
 
-    private String[] textoSeparado;
-    private String[] seguidoresMil;
-    private String[] seguindoMil;
-    private String seguidores;
-    private String seguindo;
     private Document doc;
-    private List<String> nomes = new ArrayList<>();
-    private int cont = 0;
-    private boolean resposta = false;
-    private Double numeroSeguidores = 0.0;
-    private Double numeroSeguindo = 0.0;
-    private int indiceSeguidores;
-    private int indiceSeguindo;
+
+    public AcessoInsta() {
+
+    }
 
     public boolean acesso(String url) {
+        String[] textoSeparado;
+        String[] seguidoresMil;
+        String[] seguindoMil;
+        List<String> nomes = new ArrayList<>();
+        Double numeroSeguidores = 0.0;
+        Double numeroSeguindo = 0.0;
+        int indiceSeguidores;
+        int indiceSeguindo;
         boolean resposta = false;
 
         try {
@@ -63,37 +63,88 @@ public class AcessoInsta {
             indiceSeguindo = seguindo.indexOf("k");
             System.out.println("Número de K's nos Seguindo: " + indiceSeguindo);
 
+            int indiceVirgulaSeguidores = seguidores.indexOf(",");
+            System.out.println("Numero de vírgulas nos Seguidores: " + indiceVirgulaSeguidores);
+
+            int indiceVirgulaSeguindo = seguindo.indexOf(",");
+            System.out.println("Numero de virgulas nos Seguindo: " + indiceVirgulaSeguindo);
+
             if (indiceSeguidores != -1) {
 
-                seguidoresMil = seguidores.split("k");
+                if (indiceVirgulaSeguidores == -1) {
+                    seguidoresMil = seguidores.split("k");
 
-                numeroSeguidores = Double.parseDouble(seguidoresMil[0]);
-                numeroSeguidores = numeroSeguidores * 1000;
-                System.out.println("Número real de seguidores: " + numeroSeguidores);
+                    numeroSeguidores = Double.parseDouble(seguidoresMil[0]);
+                    numeroSeguidores = numeroSeguidores * 1000;
+                    System.out.println("Número real de seguidores: " + numeroSeguidores);
+                } else if (indiceVirgulaSeguidores != -1) {
+                    String[] a = seguidores.split(",");
+                    seguidores = a[0] + a[1];
+                    System.out.println("Tem vírgula! " + seguidores);
+
+                    seguidoresMil = seguidores.split("k");
+                    numeroSeguidores = Double.parseDouble(seguidoresMil[0]);
+                    numeroSeguidores = numeroSeguidores * 1000;
+                    System.out.println("Número real de seguidores: " + numeroSeguidores);
+
+                }
 
             } else if (indiceSeguidores == -1) {
+                if (indiceVirgulaSeguidores == -1) {
 
-                numeroSeguidores = Double.parseDouble(seguidores);
-                System.out.println("Número real de seguidores: " + numeroSeguidores);
+                    numeroSeguidores = Double.parseDouble(seguidores);
+                    System.out.println("Número real de seguidores: " + numeroSeguidores);
 
+                } else if (indiceVirgulaSeguidores != -1) {
+
+                    String[] a = seguidores.split(",");
+                    seguidores = a[0] + a[1];
+                    System.out.println("Tem vírgula! " + seguidores);
+                    numeroSeguidores = Double.parseDouble(seguidores);
+                    System.out.println("Número real de seguidores: " + numeroSeguidores);
+
+                }
             }
 
             if (indiceSeguindo != -1) {
+                if (indiceVirgulaSeguindo == -1) {
+                    seguindoMil = seguidores.split("k");
+                    for (String g : seguindoMil) {
+                        System.out.println(g);
+                    }
 
-                seguindoMil = seguidores.split("k");
-                for (String g : seguindoMil) {
-                    System.out.println(g);
+                    numeroSeguindo = Double.parseDouble(seguindoMil[0]);
+                    numeroSeguindo = numeroSeguindo * 1000;
+                    System.out.println("Número real de pessoas que você segue: " + numeroSeguindo);
+                } else if (indiceVirgulaSeguindo != -1) {
+                    String[] a = seguindo.split(",");
+                    seguindo = a[0] + a[1];
+                    System.out.println("Tem vírgula!" + seguindo);
+
+                    seguindoMil = seguidores.split("k");
+                    for (String g : seguindoMil) {
+                        System.out.println(g);
+                    }
+
+                    numeroSeguindo = Double.parseDouble(seguindoMil[0]);
+                    numeroSeguindo = numeroSeguindo * 1000;
+                    System.out.println("Número real de pessoas que você segue: " + numeroSeguindo);
+
                 }
 
-                numeroSeguindo = Double.parseDouble(seguindoMil[0]);
-                numeroSeguindo = numeroSeguindo * 1000;
-                System.out.println("Número real de pessoas que você segue: " + numeroSeguindo);
-
             } else if (indiceSeguindo == -1) {
+                if (indiceVirgulaSeguindo == -1) {
+                    numeroSeguindo = Double.parseDouble(seguindo);
+                    System.out.println("Número real de pessoas que você segue: " + numeroSeguindo);
+                } else if (indiceVirgulaSeguindo != -1) {
+                    String[] a = seguindo.split(",");
+                    seguindo = a[0] + a[1];
+                    System.out.println("Tem vírgula!" + seguindo);
 
-                numeroSeguindo = Double.parseDouble(seguindo);
-                System.out.println("Número real de pessoas que você segue: " + numeroSeguindo);
+                    numeroSeguindo = Double.parseDouble(seguindo);
+                    System.out.println("Número real de pessoas que você segue: " + numeroSeguindo);
 
+                }
             }
             //--------------------Chega até aqui...----------------------------------------------------
 
@@ -105,26 +156,9 @@ public class AcessoInsta {
                 System.out.println("Testando...");
             }
 
-            
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return resposta;
-    }
-
-    public boolean avalia() {
-
-        String n = "";
-
-        if (numeroSeguidores > numeroSeguindo) {
-            resposta = false;
-        } else if (numeroSeguidores <= numeroSeguindo) {
-            resposta = true;
-        } else {
-            System.out.println("Testando...");
-        }
-
         return resposta;
     }
 

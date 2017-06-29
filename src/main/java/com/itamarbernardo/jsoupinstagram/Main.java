@@ -5,16 +5,9 @@
  */
 package com.itamarbernardo.jsoupinstagram;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /**
  *
@@ -24,15 +17,18 @@ public class Main {
 
     public static void main(String[] args) {
 
-        AcessoInsta a = new AcessoInsta();
-        String nomeUser2 = "itamarbernardo";
-        String nomeUser = "erwesonshow";
-        String nomeUser3 = "helya_barroso";
-        boolean resposta = a.acesso(nomeUser2);
+        //AcessoInsta a = new AcessoInsta();
         
+        List<String> users = new ArrayList<>();
         
-        JOptionPane.showMessageDialog(null, resposta);
-
+        users.add("itamar_bernardo");
+        users.add("erwesonshow");
+        users.add("helya_barroso");
+        
+        Controlador c = new Controlador(users);
+        String nomes = c.usuariosParaSeguir();
+        System.out.println("Seguidores para seguir:\n" + nomes);
+        c.abrirSugestoes();
     }
  
             
