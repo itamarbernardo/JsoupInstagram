@@ -18,19 +18,20 @@ public class Main {
     public static void main(String[] args) {
 
         //AcessoInsta a = new AcessoInsta();
-        
         List<String> users = new ArrayList<>();
-        
-        users.add("itamar_bernardo");
-        users.add("erwesonshow");
-        users.add("helya_barroso");
+
+        users.add("ellenlima3762");
+        users.add("fabricadevencedores");
+        users.add("alinenobreoficial");
+        users.add("_l4in3");
+        users.add("marcelagomess21");
+        users.add("claudia.ofiicial");
         
         Controlador c = new Controlador(users);
         String nomes = c.usuariosParaSeguir();
         System.out.println("Seguidores para seguir:\n" + nomes);
-        c.abrirSugestoes();
+        //c.abrirSugestoes();
+        System.out.println(c.geraScriptImacros());
     }
- 
-            
-            
-    }
+
+}

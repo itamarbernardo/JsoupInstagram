@@ -20,6 +20,7 @@ public class AbrirLink {
         Desktop d = Desktop.getDesktop();
         try{
             d.browse(new URI(url));
+          
         }
         catch(Exception e){
             e.printStackTrace();
