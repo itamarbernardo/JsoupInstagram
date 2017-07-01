@@ -27,9 +27,9 @@ public class Main {
         users.add("marcelagomess21");
         users.add("claudia.ofiicial");
         
-        Controlador c = new Controlador(users);
+        Controlador c = new Controlador("Lista");
         String nomes = c.usuariosParaSeguir();
-        System.out.println("Seguidores para seguir:\n" + nomes);
+        System.out.println("Usuários para seguir:\n" + nomes);
         //c.abrirSugestoes();
         System.out.println(c.geraScriptImacros());
     }

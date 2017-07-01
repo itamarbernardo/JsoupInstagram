@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,10 +21,20 @@ public class Controlador {
     private List<String> usuariosValidos;
     private String retorno = "";
     private String script = "";
+    private LeitorArquivo leitor;
+    private String nomeArquivo;
 
-    public Controlador(List<String> users) {
-        this.users = users;
+    public Controlador(String nomeArquivo) {
+        this.nomeArquivo = nomeArquivo;
         this.usuariosValidos = new ArrayList<>();
+        this.leitor = new LeitorArquivo(nomeArquivo);
+        if (leitor.verificarQuantidadeLinhas() % 2 == 0) {
+            users = leitor.lerArquivo();
+            System.out.println(users.toString());
+        }else{
+            JOptionPane.showMessageDialog(null, "Reveja sua lista! Ela possivelmente está errada.");
+            System.exit(0);
+        }
     }
 
     public String usuariosParaSeguir() {
@@ -58,13 +69,12 @@ public class Controlador {
             Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public String geraScriptImacros(){
-        for(String link : usuariosValidos){
+
+    public String geraScriptImacros() {
+        for (String link : usuariosValidos) {
             script = script + "URL GOTO=https://instagram.com/" + link + "\nTAG POS=1 TYPE=BUTTON ATTR=TXT:Seguir\nWAIT SECONDS=2\n";
         }
-        
-        
+
         return script;
     }
 }
